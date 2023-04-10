@@ -18,4 +18,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ECommerceApp.Domain\ECommerceApp.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

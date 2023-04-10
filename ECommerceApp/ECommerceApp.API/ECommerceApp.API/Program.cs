@@ -1,5 +1,8 @@
 
+using ECommerceApp.Application.IProductRepository;
 using ECommerceApp.Persistance.Context;
+using ECommerceApp.Persistance.Repositories;
+using ECommerceApp.Persistance.SeedData;
 using Microsoft.EntityFrameworkCore;
 
 namespace ECommerceApp.API
@@ -18,6 +21,7 @@ namespace ECommerceApp.API
                 opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
 
+            builder.Services.AddScoped<IProductRepository, ProductRepository>();
             var app = builder.Build();
 
             if (app.Environment.IsDevelopment())
@@ -30,6 +34,23 @@ namespace ECommerceApp.API
 
 
             app.MapControllers();
+
+            // Migrate Database Automatically
+
+            using var scope = app.Services.CreateScope();
+            var services = scope.ServiceProvider;
+            var context = services.GetRequiredService<StoreContext>();
+            var logger = services.GetRequiredService<ILogger<Program>>();
+            try
+            {
+                 context.Database.MigrateAsync();
+                 StoreContextSeed.SeedAsync(context);
+            }
+            catch (Exception ex)
+            {
+
+                logger.LogError(ex, "An error occured during migration");
+            }
 
             app.Run();
         }
