@@ -44,7 +44,7 @@ namespace ECommerceApp.API
             try
             {
                  context.Database.MigrateAsync();
-                 StoreContextSeed.SeedAsync(context);
+                 AppDdInitialer.Seed(services);
             }
             catch (Exception ex)
             {
