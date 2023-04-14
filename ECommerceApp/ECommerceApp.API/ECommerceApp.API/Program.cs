@@ -1,4 +1,5 @@
 
+using ECommerceApp.Application.Interfaces;
 using ECommerceApp.Application.IProductRepository;
 using ECommerceApp.Persistance.Context;
 using ECommerceApp.Persistance.Repositories;
@@ -22,6 +23,7 @@ namespace ECommerceApp.API
             });
 
             builder.Services.AddScoped<IProductRepository, ProductRepository>();
+            builder.Services.AddScoped(typeof(IGenericRepository<>),typeof(GenericRepository<>));
             var app = builder.Build();
 
             if (app.Environment.IsDevelopment())

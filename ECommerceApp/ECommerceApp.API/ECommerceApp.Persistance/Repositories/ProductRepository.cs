@@ -19,6 +19,7 @@ namespace ECommerceApp.Persistance.Repositories
         }
         public async Task<IReadOnlyList<Product>> GetProductsAsync()
         {
+            
             return await _storeContext.Products
                 .Include(p=>p.ProductBrand)
                 .Include(p=>p.ProductType)
