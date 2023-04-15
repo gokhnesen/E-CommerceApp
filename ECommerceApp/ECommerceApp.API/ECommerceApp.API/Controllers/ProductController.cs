@@ -1,4 +1,6 @@
-﻿using ECommerceApp.Application.Interfaces;
+﻿using AutoMapper;
+using ECommerceApp.Application.DTO;
+using ECommerceApp.Application.Interfaces;
 using ECommerceApp.Application.IProductRepository;
 using ECommerceApp.Application.Specifications;
 using ECommerceApp.Domain.Entities;
@@ -16,31 +18,38 @@ namespace ECommerceApp.API.Controllers
         private readonly IGenericRepository<Product> _productRepository;
         private readonly IGenericRepository<ProductBrand> _productBrandRepository;
         private readonly IGenericRepository<ProductType> _productTypeRepository;
-
+        private readonly IMapper _mapper;
 
 
         public ProductController(IGenericRepository<Product> productRepository,
             IGenericRepository<ProductBrand> productBrandRepository,
-            IGenericRepository<ProductType> productTypeRepo)
+            IGenericRepository<ProductType> productTypeRepo,
+            IMapper mapper)
         {
 
            _productBrandRepository = productBrandRepository;
             _productRepository = productRepository;
             _productTypeRepository = productTypeRepo;
+            _mapper = mapper;
 
         }
         [HttpGet]
-        public async Task<ActionResult<List<Product>>> GetProducts()
+        public async Task<ActionResult<IReadOnlyList<Product>>> GetProducts()
         {
             var spec = new ProductsWithTypesAndBrandsSpecification();
             
             var products = await _productRepository.ListAsync(spec);
-            return Ok(products);
+            return Ok(_mapper.Map<IReadOnlyList<Product>,IReadOnlyList<ProductDto>>(products));
         }
         [HttpGet("{id}")]
-        public async Task<ActionResult<Product>> GetProduct(int id)
+        public async Task<ActionResult<ProductDto>> GetProduct(int id)
         {
-            return await _productRepository.GetByIdAsync(id);
+            var spec = new ProductsWithTypesAndBrandsSpecification(id);
+
+            var product = await _productRepository.GetEntityWithSpec(spec);
+
+            return _mapper.Map<Product,ProductDto>(product);
+   
         }
 
         [HttpGet("brands")]
