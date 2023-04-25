@@ -17,6 +17,12 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ECommerceApp.Application\ECommerceApp.Application.csproj" />
+    <ProjectReference Include="..\ECommerceApp.Persistance\ECommerceApp.Persistance.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using ECommerceApp.Application.DTO;
+using ECommerceApp.Application.Errors;
 using ECommerceApp.Application.Interfaces;
 using ECommerceApp.Application.IProductRepository;
 using ECommerceApp.Application.Specifications;
@@ -42,11 +43,16 @@ namespace ECommerceApp.API.Controllers
             return Ok(_mapper.Map<IReadOnlyList<Product>,IReadOnlyList<ProductDto>>(products));
         }
         [HttpGet("{id}")]
+        //[ProducesResponseType(StatusCodes.Status200OK)]
+        //[ProducesResponseType(typeof(ApiResponse),StatusCodes.Status404NotFound)]
+
         public async Task<ActionResult<ProductDto>> GetProduct(int id)
         {
             var spec = new ProductsWithTypesAndBrandsSpecification(id);
 
             var product = await _productRepository.GetEntityWithSpec(spec);
+
+            if (product == null) return NotFound(new ApiResponse(404));
 
             return _mapper.Map<Product,ProductDto>(product);
    

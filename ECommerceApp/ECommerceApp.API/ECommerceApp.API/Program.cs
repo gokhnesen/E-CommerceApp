@@ -1,9 +1,13 @@
 
+using ECommerceApp.Application.Errors;
 using ECommerceApp.Application.Interfaces;
 using ECommerceApp.Application.IProductRepository;
+using ECommerceApp.Application.Middleware;
+using ECommerceApp.Infrastructure.Extensions;
 using ECommerceApp.Persistance.Context;
 using ECommerceApp.Persistance.Repositories;
 using ECommerceApp.Persistance.SeedData;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace ECommerceApp.API
@@ -15,18 +19,13 @@ namespace ECommerceApp.API
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddControllers();
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
-            builder.Services.AddDbContext<StoreContext>(opt =>
-            {
-                opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
-            });
-
-            builder.Services.AddScoped<IProductRepository, ProductRepository>();
-            builder.Services.AddScoped(typeof(IGenericRepository<>),typeof(GenericRepository<>));
-            builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            builder.Services.AddApplicationServices(builder.Configuration);
+           
             var app = builder.Build();
 
+            app.UseMiddleware<ExceptionMiddleware>();
+
+            app.UseStatusCodePagesWithReExecute("/errors/{0}");
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
