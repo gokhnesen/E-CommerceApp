@@ -19,6 +19,9 @@ namespace ECommerceApp.Persistance.Repositories
         {
             _storeContext = context;
         }
+
+    
+
         public async Task<T> GetByIdAsync(int id)
         {
             return await _storeContext.Set<T>().FindAsync(id);
@@ -42,6 +45,10 @@ namespace ECommerceApp.Persistance.Repositories
         private IQueryable<T> ApplySpecification(ISpecification<T> spec)
         {
             return SpecificationEvaluator<T>.GetQuery(_storeContext.Set<T>().AsQueryable(), spec);
+        }
+        public async Task<int> CountAsnyc(ISpecification<T> spec)
+        {
+            return await ApplySpecification(spec).CountAsync();
         }
     }
 }

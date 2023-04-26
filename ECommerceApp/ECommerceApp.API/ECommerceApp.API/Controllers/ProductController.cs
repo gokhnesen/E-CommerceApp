@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using ECommerceApp.Application.DTO;
 using ECommerceApp.Application.Errors;
+using ECommerceApp.Application.Helpers;
 using ECommerceApp.Application.Interfaces;
 using ECommerceApp.Application.IProductRepository;
 using ECommerceApp.Application.Specifications;
@@ -35,12 +36,19 @@ namespace ECommerceApp.API.Controllers
 
         }
         [HttpGet]
-        public async Task<ActionResult<IReadOnlyList<Product>>> GetProducts()
+        public async Task<ActionResult<Pagination<ProductDto>>> GetProducts(
+            [FromQuery]ProductSpecParams productParams)
         {
-            var spec = new ProductsWithTypesAndBrandsSpecification();
+            var spec = new ProductsWithTypesAndBrandsSpecification(productParams);
+
+            var countSpec = new ProductWithFiltersForCountSpecificication(productParams);
             
+            var totalItems = await _productRepository.CountAsnyc(countSpec);
             var products = await _productRepository.ListAsync(spec);
-            return Ok(_mapper.Map<IReadOnlyList<Product>,IReadOnlyList<ProductDto>>(products));
+
+            var data = _mapper.Map<IReadOnlyList<Product>, IReadOnlyList<ProductDto>>(products);
+
+            return Ok(new Pagination<ProductDto>(productParams.PageIndex,productParams.PageSize,totalItems,data));
         }
         [HttpGet("{id}")]
         //[ProducesResponseType(StatusCodes.Status200OK)]
