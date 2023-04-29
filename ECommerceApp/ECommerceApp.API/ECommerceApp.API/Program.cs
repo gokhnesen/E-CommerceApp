@@ -31,7 +31,7 @@ namespace ECommerceApp.API
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-
+            app.UseCors("CorsPolicy");
             app.UseAuthorization();
 
 
