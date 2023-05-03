@@ -348,6 +348,5 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
-ECommerceApp/ECommerceApp.UI/client/ssl/localhost-key.pem
-.gitignore
-ECommerceApp/ECommerceApp.UI/client/ssl/localhost.pem
+ECommerceApp/ECommerceApp.UI/client/localhost.pem
+ECommerceApp/ECommerceApp.UI/client/localhost-key.pem
