@@ -37,7 +37,7 @@ namespace ECommerceApp.API
 
             app.MapControllers();
 
-            // Migrate Database Automatically
+            // Migrate Database Automatically 
 
             using var scope = app.Services.CreateScope();
             var services = scope.ServiceProvider;
