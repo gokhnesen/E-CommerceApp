@@ -9,6 +9,7 @@ import { environment } from 'src/environments/environment';
 })
 export class TestErrorComponent {
   baseUrl = environment.apiUrl
+  validationErrors: string[] = [];
 
   constructor(
     private http:HttpClient
@@ -40,7 +41,9 @@ export class TestErrorComponent {
   get400ValidationError(){
     this.http.get(this.baseUrl + 'product/fortytwo').subscribe({
       next: response => console.log(response),
-      error: error => console.log(error)
+      error: error => {;
+      this.validationErrors = error.errors;
+    }
     })
   }
 }
