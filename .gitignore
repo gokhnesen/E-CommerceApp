@@ -9,6 +9,7 @@
 *.user
 *.userosscache
 *.sln.docstates
+*.appsettings.json
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
@@ -348,5 +349,8 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+/ECommerceAPI/ECommerceAPI/appsettings.json
+.gitignore
+.gitignore
 ECommerceApp/ECommerceApp.UI/client/localhost.pem
 ECommerceApp/ECommerceApp.UI/client/localhost-key.pem
