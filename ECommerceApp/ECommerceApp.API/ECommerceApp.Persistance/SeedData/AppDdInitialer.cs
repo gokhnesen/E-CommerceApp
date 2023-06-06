@@ -1,4 +1,5 @@
 ﻿using ECommerceApp.Domain.Entities;
+using ECommerceApp.Domain.Entities.Identity;
 using ECommerceApp.Persistance.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,7 +13,7 @@ namespace ECommerceApp.Persistance.SeedData
 {
     public class AppDdInitialer
     {
-        public static void Seed(IServiceProvider serviceProvider)
+        public static async Task Seed(IServiceProvider serviceProvider)
         {
             using(var context = new StoreContext(serviceProvider.GetRequiredService<DbContextOptions<StoreContext>>()))
             {
@@ -67,6 +68,7 @@ namespace ECommerceApp.Persistance.SeedData
             );
                 context.SaveChanges();
             }
+
         }
     }
 }

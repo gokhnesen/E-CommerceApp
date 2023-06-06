@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ECommerceApp.API", "ECommerceApp.API\ECommerceApp.API.csproj", "{69D9B29C-4B96-4E71-AA57-050A35F3ED47}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{42F18687-A13F-4C1B-986C-12EC4483F16F}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose.yml = docker-compose.yml
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{0E483B5E-85AD-4F2F-9C4A-A2C5D2374A64}"
 EndProject
@@ -18,11 +21,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ECommerceApp.Infrastructure", "ECommerceApp.Infrastructure\ECommerceApp.Infrastructure.csproj", "{B628213B-9E8F-4D6B-9C1B-41A60498EC08}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ECommerceApp.Persistance", "ECommerceApp.Persistance\ECommerceApp.Persistance.csproj", "{58B471B4-9F6B-4479-BEFC-E3F71D95F9F4}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docker", "Docker", "{463075A8-D47F-446A-89CF-5C4680DF2B2B}"
-	ProjectSection(SolutionItems) = preProject
-		docker-compose.yml = docker-compose.yml
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
