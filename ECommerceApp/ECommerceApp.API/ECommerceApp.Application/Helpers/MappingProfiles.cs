@@ -16,7 +16,9 @@ namespace ECommerceApp.Application.Helpers
             CreateMap<Product, ProductDto>()
                 .ForMember(dest => dest.ProductBrand, o => o.MapFrom(s => s.ProductBrand.Name))
                 .ForMember(dest => dest.ProductType, o => o.MapFrom(s => s.ProductType.Name));
-                //.ForMember(d => d.PictureUrl, o => o.MapFrom<ProductUrlResolver>())
+            //.ForMember(d => d.PictureUrl, o => o.MapFrom<ProductUrlResolver>())
+
+            CreateMap<AddressDto, AddressDto>().ReverseMap();
 
         }
     }

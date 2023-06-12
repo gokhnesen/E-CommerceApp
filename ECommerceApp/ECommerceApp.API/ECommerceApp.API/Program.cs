@@ -52,9 +52,9 @@ namespace ECommerceApp.API
             try
             {
                 await context.Database.MigrateAsync();
-                await identityContext.Database.MigrateAsync();
+                //await identityContext.Database.MigrateAsync();
                 await AppDdInitialer.Seed(services);
-                AppIdentityDbContextSeed.SeedUsersAsync(userManager).GetAwaiter().GetResult();
+                //AppIdentityDbContextSeed.SeedUsersAsync(userManager).GetAwaiter().GetResult();
 
             }
             catch (Exception ex)

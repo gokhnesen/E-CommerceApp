@@ -1,5 +1,6 @@
 ﻿using ECommerceApp.Application.Errors;
 using ECommerceApp.Persistance.Context;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ECommerceApp.API.Controllers
@@ -11,7 +12,14 @@ namespace ECommerceApp.API.Controllers
         {
             _storeContext = storeContext;
         }
-        
+
+        [HttpGet("testauth")]
+        [Authorize]
+        public ActionResult<string> GetSecretText()
+        {
+            return "secret broh";
+        }
+
         [HttpGet("notfound")]
         public ActionResult GetNotFoundRequest()
         {
