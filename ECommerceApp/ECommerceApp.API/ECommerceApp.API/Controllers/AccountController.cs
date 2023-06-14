@@ -1,4 +1,5 @@
-﻿using ECommerceApp.Application.DTO;
+﻿using AutoMapper;
+using ECommerceApp.Application.DTO;
 using ECommerceApp.Application.Errors;
 using ECommerceApp.Application.Interfaces;
 using ECommerceApp.Domain.Entities.Identity;
@@ -18,13 +19,15 @@ namespace ECommerceApp.API.Controllers
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
         private readonly ITokenService _tokenService;
+        private readonly IMapper _mapper;
 
         public AccountController(UserManager<AppUser> userManager,SignInManager<AppUser> signInManager
-            ,ITokenService tokenService)
+            ,ITokenService tokenService,IMapper mapper)
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _tokenService = tokenService;
+            _mapper = mapper;
         }
 
         [Authorize]
@@ -51,13 +54,26 @@ namespace ECommerceApp.API.Controllers
         }
         [Authorize]
         [HttpGet("address")]
-        public async Task<ActionResult<Address>> GetUserAddress()
+        public async Task<ActionResult<AddressDto>> GetUserAddress()
         {
             var user = await _userManager.FindUserByClaimsPrincipleWithAddress(User);
 
-            return user.Address;
+            return _mapper.Map<Address,AddressDto>(user.Address);
         }
-        
+
+        [Authorize]
+        [HttpPut("address")]
+        public async Task<ActionResult<AddressDto>> UpdateUserAddress(AddressDto address)
+        {
+            var user = await _userManager.FindUserByClaimsPrincipleWithAddress(HttpContext.User);
+
+            user.Address = _mapper.Map<AddressDto,Address>(address);
+
+            var result = await _userManager.UpdateAsync(user);
+
+            if (result.Succeeded) return Ok(_mapper.Map<Address, AddressDto>(user.Address));
+            return BadRequest();
+        }
 
         [HttpPost("login")]
         public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
@@ -85,6 +101,16 @@ namespace ECommerceApp.API.Controllers
         [HttpPost("register")]
         public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
         {
+            if (CheckEmailExistAsync(registerDto.Email).Result.Value)
+            {
+                return new BadRequestObjectResult(new ApiValidationErrorResponse
+                {
+                    Errors = new[]
+                    {
+                        "Email address is in user"
+                    }
+                });
+            }
             var user = new AppUser
             {
                 DisplayName = registerDto.DisplayName,

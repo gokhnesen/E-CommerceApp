@@ -19,6 +19,8 @@ namespace ECommerceApp.Application.Helpers
             //.ForMember(d => d.PictureUrl, o => o.MapFrom<ProductUrlResolver>())
 
             CreateMap<AddressDto, AddressDto>().ReverseMap();
+            CreateMap<CustomerBasketDto, CustomerBasket>();
+            CreateMap<BasketItemDto, BasketItem>();
 
         }
     }
