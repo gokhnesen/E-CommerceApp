@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ECommerceApp.Persistance.Migrations.AppIdentityDb
 {
     [DbContext(typeof(AppIdentityDbContext))]
-    [Migration("20230606162225_InitialIdentity")]
-    partial class InitialIdentity
+    [Migration("20230624102100_InitialIdentityContext")]
+    partial class InitialIdentityContext
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

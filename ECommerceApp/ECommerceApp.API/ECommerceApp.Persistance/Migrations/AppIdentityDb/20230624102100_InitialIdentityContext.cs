@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ECommerceApp.Persistance.Migrations.AppIdentityDb
 {
     /// <inheritdoc />
-    public partial class InitialIdentity : Migration
+    public partial class InitialIdentityContext : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
