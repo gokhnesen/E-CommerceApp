@@ -1,5 +1,6 @@
 ﻿using ECommerceApp.Domain.Entities;
 using ECommerceApp.Domain.Entities.Identity;
+using ECommerceApp.Domain.Entities.OrderAggregate;
 using ECommerceApp.Persistance.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,7 +18,7 @@ namespace ECommerceApp.Persistance.SeedData
         {
             using(var context = new StoreContext(serviceProvider.GetRequiredService<DbContextOptions<StoreContext>>()))
             {
-                if(context.Products.Any()) 
+                if(context.DeliveryMethods.Any()) 
                 {
                     return;
                 }
@@ -66,6 +67,35 @@ namespace ECommerceApp.Persistance.SeedData
                     }
                     
             );
+                context.DeliveryMethods.AddRange(
+                    new DeliveryMethod
+                    {
+                        ShortName = "Cargo1",
+                        Description = "Fastest Delivery",
+                        DeliveryTime = "2 days",
+                        Price = 10
+
+                    },
+                    new DeliveryMethod
+                    {
+                        ShortName = "Cargo2",
+                        Description = "Slower but cheap",
+                        DeliveryTime = "5 days",
+                        Price = 2
+
+                    },
+                    new DeliveryMethod
+                    {
+                        ShortName = "Cargo3",
+                        Description = "Free Delivery",
+                        DeliveryTime = "10 days",
+                        Price = 0
+
+                    }
+
+                    );
+
+
                 context.SaveChanges();
             }
 

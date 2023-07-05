@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using ECommerceApp.Application.DTO;
 using ECommerceApp.Domain.Entities;
+using ECommerceApp.Domain.Entities.Identity;
+using ECommerceApp.Domain.Entities.OrderAggregate;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,9 +20,10 @@ namespace ECommerceApp.Application.Helpers
                 .ForMember(dest => dest.ProductType, o => o.MapFrom(s => s.ProductType.Name));
             //.ForMember(d => d.PictureUrl, o => o.MapFrom<ProductUrlResolver>())
 
-            CreateMap<AddressDto, AddressDto>().ReverseMap();
+            CreateMap<Domain.Entities.Identity.Address, AddressDto>().ReverseMap();
             CreateMap<CustomerBasketDto, CustomerBasket>();
             CreateMap<BasketItemDto, BasketItem>();
+            CreateMap<AddressDto, Domain.Entities.OrderAggregate.Address>();
 
         }
     }
