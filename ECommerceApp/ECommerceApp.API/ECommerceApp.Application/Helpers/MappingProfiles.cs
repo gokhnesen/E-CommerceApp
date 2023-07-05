@@ -24,6 +24,15 @@ namespace ECommerceApp.Application.Helpers
             CreateMap<CustomerBasketDto, CustomerBasket>();
             CreateMap<BasketItemDto, BasketItem>();
             CreateMap<AddressDto, Domain.Entities.OrderAggregate.Address>();
+            CreateMap<Order, OrderToReturnDto>()
+                .ForMember(dest => dest.DeliveryMethod, o => o.MapFrom(s => s.DeliveryMethod.ShortName))
+                .ForMember(dest => dest.ShippingPrice, o => o.MapFrom(s => s.DeliveryMethod.Price));
+
+            CreateMap<OrderItem, OrderItemDto>()
+                .ForMember(d => d.ProductId, o => o.MapFrom(s => s.ItemOrdered.ProductItemId))
+                .ForMember(d => d.ProductName, o => o.MapFrom(s => s.ItemOrdered.ProductName))
+                .ForMember(d => d.PictureUrl, o => o.MapFrom(s => s.ItemOrdered.PictureUrl));
+
 
         }
     }

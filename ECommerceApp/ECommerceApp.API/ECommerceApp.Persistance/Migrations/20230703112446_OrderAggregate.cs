@@ -43,7 +43,7 @@ namespace ECommerceApp.Persistance.Migrations
                     DeliveryMethodId = table.Column<int>(type: "int", nullable: false),
                     Subtotal = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PaymentIntentId = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    PaymentIntentId = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
